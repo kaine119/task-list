@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>task v2</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	
+</head>
+<body ng-app="toDo" layout="column" flex>
+
+	<md-toolbar layout="row" style="z-index: 1" flex='10' layout-align='start center' ng-controller="SideNavController">
+		<md-button class="md-icon-button" aria-label="Settings" hide-gt-md ng-click="toggleLeft()">
+          <md-icon class='material-icon'>menu</md-icon>
+        </md-button>
+		<h2>
+			<span>Taskify v2</span>
+		</h2>
+	</md-toolbar>
+
+
+	<div layout='row' ng-controller="TaskController" layout-fill flex>
+		<md-sidenav class='md-sidenav-left' md-component-id='left' md-is-locked-open="$mdMedia('gt-md')" md-disable-backdrop='' md-whiteframe='4' flex='20' layout='column'>
+			<md-toolbar class='md-accent' layout='row' layout-align='start center'>
+				<h2 class="md-toolbar-tools">Tasklists</h2>
+				<span flex=''></span>
+				<md-button class='md-icon-button' aria-label='close' hide-gt-md ng-click='toggleLeft()'>
+					<md-icon class='material-icon'>close</md-icon>
+				</md-button>
+			</md-toolbar>
+			<md-content layout-padding='' layout='column'>
+				<md-list>
+					<md-list-item ng-repeat="list in lists">
+						<md-button ng-click="changeIndex($index); toggleLeft()" ng-class="{'selected': $index === selectedIndex}" style="width: 100%">
+						{{list.name}}
+					</md-list-item>
+				</md-list>
+			</md-content>
+		</md-sidenav>
+
+		<md-content flex='' layout-align='start center fade' layout="column">
+			<div>
+				<md-list-item class="md-2-line" ng-repeat="task in lists[selectedIndex].tasks | orderBy: 'task.dueDate'">
+					<md-checkbox ng-model="task.done"></md-checkbox>
+					<div class="md-list-item-text">
+						<h3>{{task.text}}</h3>
+						<p>by {{task.dueDate | date}}</p>
+					</div>
+				</md-list-item>
+				<form name="addTaskForm" novalidate="">
+					<md-input-container class='md-block' style="width: 20em">
+						<label>Add task</label>
+						<input required ng-model="currentTask.text" autocomplete="off" name='text'></input>			
+						 <div ng-messages="addTaskForm.text.$error">
+						 	<div ng-message="required">This is required.</div>
+						</div>		
+					</md-input-container>
+					<md-datepicker ng-model="currentTask.dueDate" md-placeholder="Due date" name='duedate' required></md-datepicker>
+					<md-button class='md-primary md-raised' ng-click="addTaskForm.$valid && addTask()">Add task</md-button>
+				</form>
+			</div>
+		</md-content>
+	</div>
+	<!-- Angular Material Dependencies -->
+	<script src="bower_components/angular/angular.min.js"></script>
+	<script src="bower_components/angular-animate/angular-animate.min.js"></script>
+	<script src="bower_components/angular-aria/angular-aria.min.js"></script>
+
+	<!-- Angular Material Javascript now available via Google CDN; version 1.0.7 used here -->
+	<script src="bower_components/angular-material/angular-material.min.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+</body>
+</html>

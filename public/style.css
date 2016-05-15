@@ -1,0 +1,4 @@
+.fade {
+	transition: 0.25s linear all;
+	-webkit-transition: 0.25s linear all;
+}
