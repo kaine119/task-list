@@ -99,12 +99,12 @@ app.controller("TaskController", ['$scope', '$mdToast', '$mdSidenav', function($
 			dueDate: null,
 			done: false
 		};
-		
+
 		$scope.addTaskForm.$setUntouched();
 		callDoneToast($mdToast)
 	};
 
-	$scope.addList = 
+	$scope.addList =
 
 	$scope.toggleLeft = function(){
 		toggleLeftNav($mdSidenav);

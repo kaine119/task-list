@@ -6,7 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	
+	<link rel="stylesheet" href="style.css" media="screen" title="no title" charset="utf-8">
+
 </head>
 <body ng-app="toDo" layout="column" flex>
 
@@ -39,26 +40,36 @@
 			</md-content>
 		</md-sidenav>
 
-		<md-content flex='' layout-align='start center fade' layout="column">
+		<md-content flex='' layout-align='start center' layout="column" >
 			<div>
-				<md-list-item class="md-2-line" ng-repeat="task in lists[selectedIndex].tasks | orderBy: 'task.dueDate'">
-					<md-checkbox ng-model="task.done"></md-checkbox>
-					<div class="md-list-item-text">
-						<h3>{{task.text}}</h3>
-						<p>by {{task.dueDate | date}}</p>
-					</div>
+				<md-list-item class="md-2-line fade" ng-repeat="task in lists[selectedIndex].tasks | orderBy: 'task.dueDate'" ng-if="!task.done">
+						<md-checkbox ng-model="task.done"></md-checkbox>
+						<div class="md-list-item-text">
+							<h3>{{task.text}}</h3>
+							<p>by {{task.dueDate | date}}</p>
+						</div>
 				</md-list-item>
+
 				<form name="addTaskForm" novalidate="">
 					<md-input-container class='md-block' style="width: 20em">
 						<label>Add task</label>
-						<input required ng-model="currentTask.text" autocomplete="off" name='text'></input>			
+						<input required ng-model="currentTask.text" autocomplete="off" name='text'></input>
 						 <div ng-messages="addTaskForm.text.$error">
 						 	<div ng-message="required">This is required.</div>
-						</div>		
+						</div>
 					</md-input-container>
 					<md-datepicker ng-model="currentTask.dueDate" md-placeholder="Due date" name='duedate' required></md-datepicker>
 					<md-button class='md-primary md-raised' ng-click="addTaskForm.$valid && addTask()">Add task</md-button>
 				</form>
+
+				<h4>Done</h4>
+				<md-list-item class="md-2-line fade" ng-repeat="task in lists[selectedIndex].tasks | orderBy: 'task.dueDate'" ng-if="task.done">
+						<md-checkbox ng-model="task.done"></md-checkbox>
+						<div class="md-list-item-text">
+							<h3>{{task.text}}</h3>
+							<p>by {{task.dueDate | date}}</p>
+						</div>
+				</md-list-item>
 			</div>
 		</md-content>
 	</div>
