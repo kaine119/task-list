@@ -1,0 +1,24 @@
+{
+  "name": "task-list",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaine119/task-list.git"
+  },
+  "author": "Kai En <muikaien1@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kaine119/task-list/issues"
+  },
+  "homepage": "https://github.com/kaine119/task-list#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "http": "0.0.0",
+    "mongodb": "^2.1.19"
+  }
+}

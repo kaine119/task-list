@@ -6,80 +6,21 @@ app.config(function($mdThemingProvider){
 		.accentPalette('orange')
 })
 
-app.controller("TaskController", ['$scope', '$mdToast', '$mdSidenav', function($scope, $mdToast, $mdSidenav){
+app.controller("TaskController", ['$scope', '$mdToast', '$mdSidenav', '$http', function($scope, $mdToast, $mdSidenav, $http){
 
-	$scope.lists = [
-		{
-			name: "Homework",
-			tasks:[
-				{
-					text: "Do this",
-					dueDate: new Date(2016, 04, 01),
-					done: true
-				},
-				{
-					text: "Blah",
-					dueDate: new Date(2016, 04, 01),
-					done: true
-				},
-				{
-					text: "fasd",
-					dueDate: new Date(2016, 04, 01),
-					done: false
-				},
-				{
-					text: "Blah",
-					dueDate: new Date(2016, 04, 01),
-					done: true
-				},
-				{
-					text: "Blah",
-					dueDate: new Date(2016, 04, 01),
-					done: true
-				},
-				{
-					text: "Blah",
-					dueDate: new Date(2016, 04, 01),
-					done: true
-				},
-				{
-					text: "Blah",
-					dueDate: new Date(2016, 04, 01),
-					done: true
-				},
-				{
-					text: "Blah",
-					dueDate: new Date(2016, 04, 01),
-					done: true
-				},
-				{
-					text: "Blah",
-					dueDate: new Date(2016, 04, 01),
-					done: true
-				}
-			],
-		},
-		{
-			name: "Random stuff",
-			tasks:[
-				{
-					text: "Download more ram",
-					dueDate: new Date(2016, 07, 03),
-					done: true
-				},
-				{
-					text: "Ram a car",
-					dueDate: new Date(2016, 08, 21),
-					done: true
-				},
-				{
-					text: "Download CSI: Cyber",
-					dueDate: new Date(2016, 07, 31),
-					done: false
-				}
-			],
-		}
-	];
+	$scope.lists = [];
+
+	$http({
+		method: "GET",
+		url: 'http://localhost:3000/api/get/lists'
+	})
+	.then(function successCallback(res){
+		console.log(res.data)
+		$scope.lists = res.data;
+	}, function errorCallback(err){
+		console.error(err);
+	});
+
 	$scope.selectedIndex = 0;
 	$scope.changeIndex = function(x){
 		$scope.selectedIndex = x;
@@ -119,7 +60,7 @@ app.controller("SideNavController", ['$scope', '$mdSidenav', function($scope, $m
 }])
 
 function callDoneToast($mdToast){
-	$mdToast.show($mdToast.simple().textContent("Task saved.").hideDelay(400))
+	$mdToast.show($mdToast.simple().textContent("Task saved").hideDelay(400))
 }
 
 function toggleLeftNav($mdSidenav){

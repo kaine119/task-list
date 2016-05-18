@@ -22,7 +22,7 @@
 
 
 	<div layout='row' ng-controller="TaskController" layout-fill flex>
-		<md-sidenav class='md-sidenav-left' md-component-id='left' md-is-locked-open="$mdMedia('gt-md')" md-disable-backdrop='' md-whiteframe='4' flex='20' layout='column'>
+		<md-sidenav class='md-sidenav-left' md-component-id='left' md-is-locked-open="$mdMedia('gt-md')" md-disable-backdrop='' md-whiteframe='4' layout='column'>
 			<md-toolbar class='md-accent' layout='row' layout-align='start center'>
 				<h2 class="md-toolbar-tools">Tasklists</h2>
 				<span flex=''></span>
@@ -42,6 +42,7 @@
 
 		<md-content flex='' layout-align='start center' layout="column" >
 			<div>
+				<h2>{{lists[selectedIndex].name}}</h2>
 				<md-list-item class="md-2-line fade" ng-repeat="task in lists[selectedIndex].tasks | orderBy: 'task.dueDate'" ng-if="!task.done">
 						<md-checkbox ng-model="task.done"></md-checkbox>
 						<div class="md-list-item-text">
