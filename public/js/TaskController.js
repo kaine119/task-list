@@ -1,11 +1,3 @@
-var app = angular.module("toDo", ['ngMaterial']);
-
-app.config(function($mdThemingProvider){
-	$mdThemingProvider.theme('default')
-		.primaryPalette("blue-grey")
-		.accentPalette('orange')
-})
-
 app.controller("TaskController", ['$scope', '$mdToast', '$mdSidenav', '$http', function($scope, $mdToast, $mdSidenav, $http){
 
 	$scope.lists = [];
@@ -34,6 +26,19 @@ app.controller("TaskController", ['$scope', '$mdToast', '$mdSidenav', '$http', f
 
 	$scope.addTask = function(){
 		$scope.addTaskForm.$setPristine();
+		$scope.currentTask.listID = $scope.lists[$scope.selectedIndex]._id;
+		$http({
+			method: "POST",
+			url: "http://localhost:3000/api/post/newTask",
+			data: $scope.currentTask
+		})
+		.then(function successCallback(res) {			
+			callDoneToast($mdToast)
+		}, function errorCallback(err) {
+			console.error(err);
+		})
+
+
 		$scope.lists[$scope.selectedIndex].tasks.push($scope.currentTask);
 		$scope.currentTask = {
 			text: '',
@@ -42,10 +47,9 @@ app.controller("TaskController", ['$scope', '$mdToast', '$mdSidenav', '$http', f
 		};
 
 		$scope.addTaskForm.$setUntouched();
-		callDoneToast($mdToast)
 	};
 
-	$scope.addList =
+	
 
 	$scope.toggleLeft = function(){
 		toggleLeftNav($mdSidenav);
@@ -53,16 +57,7 @@ app.controller("TaskController", ['$scope', '$mdToast', '$mdSidenav', '$http', f
 
 }]);
 
-app.controller("SideNavController", ['$scope', '$mdSidenav', function($scope, $mdSidenav){
-	$scope.toggleLeft = function(){
-		toggleLeftNav($mdSidenav)
-	}
-}])
-
 function callDoneToast($mdToast){
 	$mdToast.show($mdToast.simple().textContent("Task saved").hideDelay(400))
 }
 
-function toggleLeftNav($mdSidenav){
-	$mdSidenav('left').toggle();
-}
